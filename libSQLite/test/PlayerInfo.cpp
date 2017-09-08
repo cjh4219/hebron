@@ -201,7 +201,7 @@ int PlayerInfo::load_type_info(TiXmlElement* pElem)
 		PlayerInfo::load_type_info(pSubElem);
 		level--;
 	}
-
+	return false;
 }
 
 void PlayerInfo::print_typeInfo_map()

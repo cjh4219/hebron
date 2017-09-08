@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<TestSuite>
+  <TestCases>
+    <TestCase>
+      <input target="C" port="in1" time="0.0">t19</input>
+      <output target="C" port="out1" time="0.0" type="exact">t20</output>
+    </TestCase>
+    <TestCase>
+      <input target="C" port="in1" time="0.0">t21</input>
+      <output target="C" port="out" time="0.5" type="eventually">t22</output>
+    </TestCase>
+  </TestCases>
+</TestSuite>  

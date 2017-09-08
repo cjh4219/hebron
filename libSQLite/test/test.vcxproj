@@ -62,13 +62,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>C:\Users\jwchoi\Documents\Visual Studio 2010\Projects\libSQLite\Debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)LibSQLite</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -112,7 +113,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EventInfo.cpp" />
+    <ClCompile Include="LibSQLite.cpp" />
     <ClCompile Include="PlayerInfo.cpp" />
+    <ClCompile Include="shell.c" />
+    <ClCompile Include="SimManager.cpp" />
+    <ClCompile Include="sqlite3.c" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="tinystr.cpp" />
     <ClCompile Include="tinyxml.cpp" />
@@ -125,9 +131,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EventInfo.h" />
+    <ClInclude Include="LibSQLite.h" />
     <ClInclude Include="PlayerInfo.h" />
+    <ClInclude Include="SimManager.h" />
+    <ClInclude Include="sqlite3.h" />
+    <ClInclude Include="sqlite3ext.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sqlite3.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

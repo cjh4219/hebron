@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <LibSQLite.h>
+#include "LibSQLite.h"
 #include "tinyxml.h"
 
 typedef char CHAR;
