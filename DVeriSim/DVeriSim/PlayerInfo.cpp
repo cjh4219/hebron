@@ -43,36 +43,31 @@ PlayerInfo::~PlayerInfo()
 
 bool PlayerInfo::GetStructureInfo()
 {
-	std::wstring table_name;
 	std::wstring w_query;
 	std::string query;
 	query = "SELECT table_name FROM Object_Info WHERE object_id == \"" + _object_id + "\";";
 	w_query.assign(query.begin(), query.end());
 
-	std::list<std::list<std::wstring>> returned_data = player_db.query_return_data(w_query);
+	std::list<std::list<TypeWrapper>> returned_data = player_db.query_return_data(w_query);
 
-	for(list<list<wstring>>::iterator iter1 = returned_data.begin();iter1!=returned_data.end();iter1++)
+	for(std::list<std::list<TypeWrapper>>::iterator iter1 = returned_data.begin();iter1!=returned_data.end();iter1++)
 	{
-		for(list<wstring>::iterator iter2 = (*iter1).begin(); iter2!=(*iter1).end(); iter2++)
+		for(std::list<TypeWrapper>::iterator iter2 = (*iter1).begin(); iter2!=(*iter1).end(); iter2++)
 		{
-			table_name = *iter2;
+			_table_name = (*iter2).GetString();
 		}
 	}
 	
-	_table_name.assign(table_name.begin(), table_name.end());
 	query = "SELECT attribute_name FROM Column_Info WHERE table_name == \""+ _table_name +"\" ORDER BY LENGTH(column_name), column_name ASC;";
 	w_query.assign(query.begin(), query.end());
 	
 	returned_data = player_db.query_return_data(w_query);
 
-	for(list<list<wstring>>::iterator iter1 = returned_data.begin();iter1!=returned_data.end();iter1++)
+	for(std::list<std::list<TypeWrapper>>::iterator iter1 = returned_data.begin();iter1!=returned_data.end();iter1++)
 	{
-		for(list<wstring>::iterator iter2 = (*iter1).begin(); iter2!=(*iter1).end(); iter2++)
+		for(std::list<TypeWrapper>::iterator iter2 = (*iter1).begin(); iter2!=(*iter1).end(); iter2++)
 		{
-			std::string str;
-			std::wstring wstr = *iter2;
-			str.assign(wstr.begin(), wstr.end());
-			column_structure_info.push_back(str);
+			column_structure_info.push_back((*iter2).GetString());
 		}
 	}
 	
@@ -86,22 +81,19 @@ bool PlayerInfo::GetPlayerData()
 	query = "SELECT * FROM " + _table_name + " ORDER BY CAST(s_time AS DOUBLE) ASC;";
 	w_query.assign(query.begin(), query.end());
 
-	std::list<std::list<std::wstring>> returned_data = player_db.query_return_data(w_query);
+	std::list<std::list<TypeWrapper>> returned_data = player_db.query_return_data(w_query);
 
-	for(list<list<wstring>>::iterator iter1 = returned_data.begin();iter1!=returned_data.end();iter1++)
+	for(std::list<std::list<TypeWrapper>>::iterator iter1 = returned_data.begin();iter1!=returned_data.end();iter1++)
 	{
-		list<wstring>::iterator iter2 = (*iter1).begin();
-		double s_time=std::stod(*iter2, 0);
-		std::vector<std::string> temp;
+		std::list<TypeWrapper>::iterator iter2 = (*iter1).begin();
+		double s_time = (*iter2).GetNumber();
+		std::vector<TypeWrapper> temp;
 
 		for(iter2 = ++(*iter1).begin(); iter2!=(*iter1).end(); iter2++)
 		{
-			std::string str;
-			std::wstring wstr = *iter2;
-			str.assign(wstr.begin(), wstr.end());
-			temp.push_back(str);
+			temp.push_back(*iter2);
 		}
-		player_data.insert(std::pair<double, std::vector<std::string>>(s_time, temp));
+		player_data.insert(std::pair<double, std::vector<TypeWrapper>>(s_time, temp));
 	}
 
 	return true;
@@ -229,7 +221,7 @@ INT32 PlayerInfo::string_to_int32(STRING sInt32)
 	return value;
 }
 
-int string_to_type(std::string str)
+int PlayerInfo::string_to_type(std::string str)
 {
 	if ( str.compare("INT16_TYPE") == 0 || str.compare("UINT16_TYPE") == 0 ||
 		str.compare("INT32_TYPE") == 0 || str.compare("UINT32_TYPE") == 0 ||

@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include "LibSQLite.h"
+#include "TypeWrapper.h"
 #include "tinyxml.h"
 
 typedef char CHAR;
@@ -42,11 +43,11 @@ private:
 	std::string _db_file_path;
 	LibSQLite player_db;
 
-private:
+public:
 	std::string _object_id;
 	std::string _table_name;
 	std::vector<std::string> column_structure_info;
-	std::map<double, std::vector<std::string>> player_data;
+	std::map<double, std::vector<TypeWrapper>> player_data;
 
 private:
 	int test;
@@ -72,6 +73,7 @@ public:
 public:
 	DOUBLE	string_to_double(STRING sDouble);
 	INT32	string_to_int32(STRING sInt32);
+	int string_to_type(std::string str);
 };
 
 #endif

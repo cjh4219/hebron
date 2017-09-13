@@ -13,14 +13,14 @@ typedef struct EVENT{
 	std::string execute_player_object_id;
 	std::string interface_var_name;
 	std::string create_player_object_id;
-	void* event_data;
+	const void* event_data;
 	int brevoke;
 	double revoke;
 }EVENT;
 
 class EventInfo
 {
-private:
+public:
 	std::string _db_file_path;
 	LibSQLite event_db;
 	std::map<int, EVENT> event_data;
